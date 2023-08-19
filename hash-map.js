@@ -2,7 +2,7 @@
 // the hash function used here is very basic
 
 class HashTable {
-  constructor(size = 53) {
+  constructor(size) {
     this.keyMap = new Array(size);
   }
 
@@ -14,7 +14,6 @@ class HashTable {
       let value = char.charCodeAt(0) - 96;
       total = (total * Prime + value) % this.keyMap.length;
     }
-
     return total;
   }
 
@@ -26,7 +25,17 @@ class HashTable {
     this.keyMap[index].push([key, value]);
   }
 
-  get(key) {}
+  get(key) {
+    let index = this._hash(key);
+    if (this.keyMap[index]) {
+      for (let i = 0; i < this.keyMap[index]; i++) {
+        if (this.keyMap[index][i][0] === key) {
+          return this.keyMap[index][i][1];
+        }
+      }
+    }
+    return undefined;
+  }
 }
 
-let ht = new HashTable();
+let ht = new HashTable(53);
